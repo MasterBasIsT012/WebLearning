@@ -1,7 +1,7 @@
-﻿using Axelot_meeting_2.Interfaces;
+﻿using WebLearning.Interfaces;
 using System.Text;
 
-namespace Axelot_meeting_2.Reports
+namespace WebLearning.Reports
 {
 	public class TimeoutReport : IReport
 	{

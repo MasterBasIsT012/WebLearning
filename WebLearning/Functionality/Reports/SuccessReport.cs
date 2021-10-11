@@ -1,6 +1,6 @@
-﻿using Axelot_meeting_2.Interfaces;
+﻿using WebLearning.Interfaces;
 
-namespace Axelot_meeting_2.Reports
+namespace WebLearning.Reports
 {
 	public class SuccessReport : IReport
 	{

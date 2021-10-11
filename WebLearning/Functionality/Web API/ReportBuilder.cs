@@ -1,9 +1,9 @@
-﻿using Axelot_meeting_2.Interfaces;
+﻿using WebLearning.Interfaces;
 using System;
 using System.Text;
 using System.Threading;
 
-namespace Axelot_meeting_2.WebAPI
+namespace WebLearning.WebAPI
 {
 	public class ReportBuilder : IReportBuilder
 	{

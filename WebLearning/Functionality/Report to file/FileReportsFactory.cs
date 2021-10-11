@@ -1,7 +1,7 @@
-﻿using Axelot_meeting_2.Interfaces;
-using Axelot_meeting_2.Reports;
+﻿using WebLearning.Interfaces;
+using WebLearning.Reports;
 
-namespace Axelot_meeting_2.FileReport
+namespace WebLearning.FileReport
 {
 	public class FileReportsFactory : IReportsFactory
 	{

@@ -1,6 +1,6 @@
-using Axelot_meeting_2.FileReport;
-using Axelot_meeting_2.Interfaces;
-using Axelot_meeting_2.WebAPI;
+using WebLearning.FileReport;
+using WebLearning.Interfaces;
+using WebLearning.WebAPI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

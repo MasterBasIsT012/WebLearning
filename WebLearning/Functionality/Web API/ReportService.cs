@@ -1,11 +1,11 @@
-﻿using Axelot_meeting_2.Interfaces;
+﻿using WebLearning.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Axelot_meeting_2.WebAPI
+namespace WebLearning.WebAPI
 {
 	public class ReportService : IDisposable, IReportService
 	{
@@ -17,7 +17,7 @@ namespace Axelot_meeting_2.WebAPI
 		private IReportsFactory reportFactory;
 		private IReporter reporter;
 
-		public ReportService([FromServices] IReportBuilder reportBuilder, [FromServices] IReportsFactory reportFactory, [FromServices] IReporter reporter)
+		public ReportService(IReportBuilder reportBuilder, IReportsFactory reportFactory, IReporter reporter)
 		{
 			logger.Info("Web installation started");
 			this.reportBuilder = reportBuilder;

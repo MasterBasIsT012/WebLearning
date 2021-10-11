@@ -1,4 +1,4 @@
-﻿using Axelot_meeting_2.Interfaces;
+﻿using WebLearning.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
 
@@ -8,7 +8,7 @@ namespace WebLearning.Controllers
 	{
 		IReportService reportService;
 
-		public ReportController([FromServices] IReportService reportService)
+		public ReportController(IReportService reportService)
 		{
 			this.reportService = reportService;
 		}

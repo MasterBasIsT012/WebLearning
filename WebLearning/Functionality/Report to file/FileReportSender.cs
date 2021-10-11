@@ -1,9 +1,9 @@
-﻿using Axelot_meeting_2.Interfaces;
+﻿using WebLearning.Interfaces;
 using System;
 using System.IO;
 using System.Reflection;
 
-namespace Axelot_meeting_2.FileReport
+namespace WebLearning.FileReport
 {
 	public class FileReportSender : ISender
 	{

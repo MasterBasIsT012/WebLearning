@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Axelot_meeting_2.Interfaces
+namespace WebLearning.Interfaces
 {
 	public interface IReportBuilder
 	{

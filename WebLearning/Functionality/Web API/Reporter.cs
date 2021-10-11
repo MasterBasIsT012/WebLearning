@@ -1,7 +1,7 @@
-﻿using Axelot_meeting_2.Interfaces;
+﻿using WebLearning.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Axelot_meeting_2.WebAPI
+namespace WebLearning.WebAPI
 {
 	public class Reporter : IReporter
 	{
