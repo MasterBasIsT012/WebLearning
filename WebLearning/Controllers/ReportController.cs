@@ -1,27 +1,36 @@
-﻿using WebLearning.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using WebLearning.Data;
+using WebLearning.Interfaces;
 
 namespace WebLearning.Controllers
 {
 	public class ReportController : Controller
 	{
-		IReportService reportService;
+		private IReportService reportService;
 
 		public ReportController(IReportService reportService)
 		{
 			this.reportService = reportService;
 		}
 
-		public IActionResult Build()
+		[HttpGet]
+		public IActionResult Menu()
 		{
-			reportService.Build();
 			return View();
 		}
 
-		public string Hello(string name)
+		[HttpGet]
+		public IActionResult Build(string Params)
 		{
-			return HtmlEncoder.Default.Encode($"Hello {name}");
+			if (Params is null)
+			{
+				throw new ArgumentNullException(nameof(Params));
+			}
+
+			ReportInfo reportInfo = null;
+
+			return Ok(reportInfo);
 		}
 	}
 }

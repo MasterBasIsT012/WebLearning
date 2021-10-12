@@ -1,11 +1,10 @@
 ﻿using WebLearning.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebLearning.WebAPI
+namespace WebLearning.Services
 {
 	public class ReportService : IDisposable, IReportService
 	{
@@ -26,7 +25,7 @@ namespace WebLearning.WebAPI
 			logger.Info("Web installation finished");
 		}
 
-		public int Build()
+		public int Build(string Params)
 		{
 			logger.Debug("Build method started from Web");
 			int id = Id++;

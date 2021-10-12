@@ -8,7 +8,7 @@ namespace WebLearning.Data
 	}
 	public class ReportInfo
 	{
-		private string RequestID;
+		private int RequestID;
 		private string[] Params;
 		private DateTime StartTime;
 		private DateTime EndTime;

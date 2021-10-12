@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebLearning.Models;
 
 namespace WebLearning
 {
@@ -36,7 +37,7 @@ namespace WebLearning
 			{
 				endpoints.MapControllerRoute(
 					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
+					pattern: "{controller=Report}/{action=Menu}/{id?}");
 			});
 		}
 	}

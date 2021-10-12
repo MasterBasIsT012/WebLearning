@@ -2,24 +2,21 @@
 using WebLearning.Data;
 using WebLearning.Interfaces;
 
-namespace WebLearning.Models
+namespace WebLearning.Data
 {
-	public class StorageReportInfoRepository : IStorageReportInfoRepository
-
+	public class ReportInfoRepository : IReportInfoRepository
 	{
 		static int Id = 0;
 		Dictionary<int, ReportInfo> reports = new Dictionary<int, ReportInfo>();
 
-		public ReportInfo CreateReportInfo(ReportInfo reportInfo)
+		public void CreateReportInfo(ReportInfo reportInfo)
 		{
 			reports.Add(Id++, reportInfo);
-			return null;
 		}
 
-		public ReportInfo DeleteReportInfo(int id)
+		public void DeleteReportInfo(int id)
 		{
 			reports.Remove(id);
-			return null;
 		}
 
 		public ReportInfo GetReportInfo(int id)
@@ -30,9 +27,9 @@ namespace WebLearning.Models
 			return reportInfo;
 		}
 
-		public ReportInfo UpdateReportInfo(int id)
+		public void UpdateReportInfo(int id)
 		{
-			return null;
+			return;
 		}
 	}
 }
