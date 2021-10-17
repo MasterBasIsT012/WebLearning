@@ -1,10 +1,12 @@
 ﻿using Infrastructure.Interfaces;
 using RestSharp;
+using NLog;
 
 namespace WebLearning.Services
 {
 	public class RestClientReportService : IReportService
 	{
+		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private readonly RestClient restClient = new RestClient("https://localhost:5001");
 
 		public RestClientReportService()
@@ -15,10 +17,21 @@ namespace WebLearning.Services
 
 		public int Build(string Params)
 		{
-			RestRequest restRequest = new RestRequest("/Build");
+			logger.Debug("Build method started from RestClientReprtService");
+			RestRequest restRequest = new RestRequest("Report/Build");
 			restRequest.AddJsonBody(Params);
-			restClient.Post(restRequest);
-			return 0;
+			int id = int.Parse(restClient.Get(restRequest).Content);
+			logger.Info($"Build method finished");
+
+			return id;
+		}
+		
+		public void Stop(int id)
+		{
+			logger.Debug("Stop method started from RestClientReprtService");
+			RestRequest restRequest = new RestRequest("Report/Stop");
+			restRequest.AddJsonBody(id.ToString());
+			logger.Info($"Report {id}: report stopped");
 		}
 
 		public void Dispose()
@@ -31,9 +44,5 @@ namespace WebLearning.Services
 			throw new System.NotImplementedException();
 		}
 
-		public void Stop(int id)
-		{
-			throw new System.NotImplementedException();
-		}
 	}
 }

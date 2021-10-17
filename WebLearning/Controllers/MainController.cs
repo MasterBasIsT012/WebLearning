@@ -4,6 +4,7 @@ using NLog;
 
 namespace WebLearning.Controllers
 {
+	[Route("api/Reports/{action}")]
 	public class MainController : Controller
 	{
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
@@ -14,12 +15,19 @@ namespace WebLearning.Controllers
 			this.reportService = reportService;
 		}
 
-		[HttpGet]
-		public IActionResult Build([FromBody] string Params)
+		[HttpPost]
+		public IActionResult Build([FromBody]string Params)
 		{
-			logger.Debug("Build method started");
 			int id = reportService.Build(Params);
-			logger.Debug("Build method finished");
+
+			return Ok(id);
+		}
+
+		[HttpGet]
+		public IActionResult Stop([FromBody]int id)
+		{
+			reportService.Stop(id);
+
 			return Ok(id);
 		}
 	}

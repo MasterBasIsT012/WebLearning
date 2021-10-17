@@ -69,7 +69,7 @@ namespace ReportService.Services
 
 		public void Stop(int id)
 		{
-			logger.Debug("Stop method started from Web");
+			logger.Debug("Stop method started from ReportService");
 
 			CancellationTokenSource cts;
 			if (cancellationTokenSources.TryGetValue(id, out cts))

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebLearning.Controllers
 {
-	[Route("api/Reports")]
 	public class ReportController : Controller
 	{
 		private readonly IReportService reportService;
@@ -14,7 +13,7 @@ namespace WebLearning.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Build([FromBody] string Params)
+		public IActionResult Build([FromBody]string Params)
 		{
 			int buildTaskId = reportService.Build(Params);
 
