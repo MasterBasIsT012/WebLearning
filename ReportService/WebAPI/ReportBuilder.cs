@@ -7,7 +7,7 @@ namespace ReportService.WebAPI
 {
 	public class ReportBuilder : IReportBuilder
 	{
-		public byte[] BuildReport(CancellationToken token)
+		public byte[] BuildReport(string Params, CancellationToken token)
 		{
 			byte[] reportData = null;
 			int time;
@@ -18,7 +18,7 @@ namespace ReportService.WebAPI
 
 				time = Processing(token);
 
-				reportData = GetData(time);
+				reportData = GetData(time, Params);
 			}
 			catch (Exception)
 			{
@@ -46,9 +46,9 @@ namespace ReportService.WebAPI
 
 			return time;
 		}
-		private byte[] GetData(int time)
+		private byte[] GetData(int time, string Params)
 		{
-			string message = string.Concat("Report ready at ", time.ToString(), " s.");
+			string message = string.Concat("Report ready at ", time.ToString(), " s.\n", Params);
 			return Encoding.UTF8.GetBytes(message);
 		}
 	}

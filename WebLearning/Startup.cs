@@ -2,10 +2,9 @@ using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using ReportService.FileReport;
+using ReportService.Services;
 using ReportService.WebAPI;
-using ReportService;
 
 namespace WebLearning
 {
@@ -13,27 +12,23 @@ namespace WebLearning
 	{
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllersWithViews();
+			services.AddControllers();
+			services.AddSingleton<IReportService, ReportsService>();
+			services.AddTransient<IReportBuilder, ReportBuilder>();
+			services.AddTransient<IReportsFactory, FileReportsFactory>();
+			services.AddTransient<IReporter, Reporter>();
+			services.AddTransient<ISender, FileReportSender>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
-
 			app.UseHttpsRedirection();
-			app.UseStaticFiles();
-
+			
 			app.UseRouting();
-
 			app.UseEndpoints(endpoints =>
-			{
 				endpoints.MapControllerRoute(
 					name: "default",
-					pattern: "{controller=Report}/{action=Menu}/{id?}");
-			});
+					pattern: "{controller}/{action}/{id?}"));
 		}
 	}
 }

@@ -30,16 +30,16 @@ namespace ReportService.Services
 			logger.Debug("Build method started from Web");
 			int id = Id++;
 
-			BuildReport(id);
+			BuildReport(id, Params);
 
 			return id;
 		}
-		private async void BuildReport(int id)
+		private async void BuildReport(int id, string Params)
 		{
 			byte[] reportData = null;
 
 			CancellationToken token = CreateAndSaveCancellationToken(id);
-			Task<byte[]> buildTask = Task.Factory.StartNew(() => reportData = reportBuilder.BuildReport(token), token);
+			Task<byte[]> buildTask = Task.Factory.StartNew(() => reportData = reportBuilder.BuildReport(Params, token), token);
 			Task taskTimeout = Task.Delay(timeoutTime);
 
 			if (await Task.WhenAny(buildTask, taskTimeout) == buildTask)

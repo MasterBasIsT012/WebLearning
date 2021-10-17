@@ -4,17 +4,21 @@ using RestSharp;
 
 namespace WebLearning.Controllers
 {
-	[Route("api/Main")]
 	public class MainController : Controller
 	{
-		[HttpPost]
-		public IActionResult Build(string Params)
+		private IReportService reportService;
+
+		public MainController(IReportService reportService)
 		{
-			RestClient restClient = new RestClient("http://localhost:5000/api/Reports");
-			RestRequest restRequest = new RestRequest("/Build");
-			restRequest.AddJsonBody(Params);
-			restClient.Post(restRequest);
-			return Ok();
+			this.reportService = reportService;
+		}
+
+		//либо вызывает reportService из связей или дергает микросервис
+		[HttpGet]
+		public IActionResult Build([FromBody]string Params)
+		{
+			int id = reportService.Build(Params);
+			return Ok(id);
 		}
 	}
 }
