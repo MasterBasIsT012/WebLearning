@@ -15,7 +15,8 @@ namespace ReportService.Data
 
 		public void DeleteReportInfo(int id)
 		{
-			reports.Remove(id);
+			if (reports.ContainsKey(id))
+				reports.Remove(id);
 		}
 
 		public IReportInfo GetReportInfo(int id)
@@ -25,9 +26,10 @@ namespace ReportService.Data
 			return reportInfo;
 		}
 
-		public void UpdateReportInfo(int id)
+		public void UpdateReportInfo(int id, IReportInfo reportInfo)
 		{
-			return;
+			if (reports.ContainsKey(id))
+				reports[id] = reportInfo;
 		}
 	}
 }
