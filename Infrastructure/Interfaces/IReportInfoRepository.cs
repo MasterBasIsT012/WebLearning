@@ -5,6 +5,6 @@
 		void CreateReportInfo(IReportInfo reportInfo);
 		void DeleteReportInfo(int id);
 		IReportInfo GetReportInfo(int id);
-		void UpdateReportInfo(int id);
+		void UpdateReportInfo(int id, IReportService reportInfo);
 	}
 }
