@@ -8,7 +8,7 @@ namespace ReportService.Data
 		static int Id = 0;
 		readonly Dictionary<int, IReportInfo> reports = new Dictionary<int, IReportInfo>();
 
-		public void CreateReportInfo(IReportInfo reportInfo)
+		public void AddReportInfo(IReportInfo reportInfo)
 		{
 			reports.Add(Id++, reportInfo);
 		}

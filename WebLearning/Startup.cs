@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using ReportService.FileReport;
 using ReportService.Services;
-using ReportService.WebAPI;
+using ReportService.ReportsAPI;
+using ReportService.Data;
 
 namespace WebLearning
 {
@@ -18,6 +19,7 @@ namespace WebLearning
 			services.AddTransient<IReportsFactory, FileReportsFactory>();
 			services.AddTransient<IReporter, Reporter>();
 			services.AddTransient<ISender, FileReportSender>();
+			services.AddTransient<IReportInfoRepository, ReportInfoRepository>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

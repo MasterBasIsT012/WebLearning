@@ -1,13 +1,13 @@
 ﻿using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ReportService.WebAPI
+namespace ReportService.ReportsAPI
 {
 	public class Reporter : IReporter
 	{
 		private readonly ISender sender;
 
-		public Reporter([FromServices] ISender sender)
+		public Reporter(ISender sender)
 		{
 			this.sender = sender;
 		}

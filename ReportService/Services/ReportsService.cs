@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Interfaces;
+using ReportService.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -11,51 +12,55 @@ namespace ReportService.Services
 		private readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		private int Id = 0;
 		private readonly int timeoutTime = 30000;
-		private readonly Dictionary<int, CancellationTokenSource> cancellationTokenSources = new Dictionary<int, CancellationTokenSource>();
+		private Dictionary<int, CancellationTokenSource> cancellationTokenSources = new Dictionary<int, CancellationTokenSource>();
+		private IReportInfoRepository reportInfoRepository;
 		private readonly IReportBuilder reportBuilder;
 		private readonly IReportsFactory reportFactory;
 		private readonly IReporter reporter;
 
-		public ReportsService(IReportBuilder reportBuilder, IReportsFactory reportFactory, IReporter reporter)
+		public ReportsService(IReportBuilder reportBuilder, IReportsFactory reportFactory, IReporter reporter, IReportInfoRepository reportInfoRepository)
 		{
 			logger.Info("Web installation started");
 			this.reportBuilder = reportBuilder;
 			this.reportFactory = reportFactory;
 			this.reporter = reporter;
+			this.reportInfoRepository = reportInfoRepository;
 			logger.Info("Web installation finished");
 		}
 
 		public int Build(string Params)
 		{
 			logger.Debug("Build method started from Web");
-			int id = Id++;
+			ReportInfo reportInfo = new ReportInfo();
+			reportInfo.Params = Params;
+			reportInfo.ID = Id++;
 
-			BuildReport(id, Params);
+			BuildReport(reportInfo, Params);
 
-			return id;
+			return reportInfo.ID;
 		}
-		private async void BuildReport(int id, string Params)
+		private async void BuildReport(IReportInfo reportInfo, string Params)
 		{
 			byte[] reportData = null;
 
-			CancellationToken token = CreateAndSaveCancellationToken(id);
-			Task<byte[]> buildTask = Task.Factory.StartNew(() => reportData = reportBuilder.BuildReport(Params, token), token);
+			CancellationToken token = CreateAndSaveCancellationToken(reportInfo.ID);
+			Task<byte[]> buildTask = Task.Factory.StartNew(() => reportData = reportBuilder.BuildReport(reportInfo, ref reportInfoRepository, token), token);
 			Task taskTimeout = Task.Delay(timeoutTime);
 
 			if (await Task.WhenAny(buildTask, taskTimeout) == buildTask)
 			{
 				if (reportData != null)
-					reporter.Report(reportFactory.GetSuccessReport(id, reportData));
+					reporter.Report(reportFactory.GetSuccessReport(reportInfo.ID, reportData));
 				else
 				{
-					reporter.Report(reportFactory.GetErrorReport(id, reportData));
-					logger.Warn($"Report {id}: report error");
+					reporter.Report(reportFactory.GetErrorReport(reportInfo.ID, reportData));
+					logger.Warn($"Report {reportInfo.ID}: report error");
 				}
 			}
 			else
 			{
-				reporter.Report(reportFactory.GetTimeoutReport(id, reportData));
-				logger.Warn($"Report {id}: report timeout exception");
+				reporter.Report(reportFactory.GetTimeoutReport(reportInfo.ID, reportData));
+				logger.Warn($"Report {reportInfo.ID}: report timeout exception");
 			}
 		}
 		private CancellationToken CreateAndSaveCancellationToken(int id)

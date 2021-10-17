@@ -4,6 +4,6 @@ namespace Infrastructure.Interfaces
 {
 	public interface IReportBuilder
 	{
-		byte[] BuildReport(string Params, CancellationToken token);
+		byte[] BuildReport(IReportInfo reportInfo, ref IReportInfoRepository reportInfoRepository, CancellationToken token);
 	}
 }

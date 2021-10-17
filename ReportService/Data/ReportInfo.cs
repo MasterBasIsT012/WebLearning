@@ -1,19 +1,16 @@
-﻿using System;
+﻿using Infrastructure.Interfaces;
+using System;
 
 namespace ReportService.Data
 {
-	enum ReportStatus
+	public class ReportInfo : IReportInfo
 	{
-		inProgress, Done, Error, Timeout
-	}
-	public class ReportInfo
-	{
-		private readonly int ID;
-		private readonly string Params;
-		private readonly DateTime StartTime;
-		private readonly DateTime EndTime;
-		private readonly byte[] ReportResult;
-		private readonly string ErrorMassage;
-		private readonly ReportStatus Status;
+		public int ID { get; set; }
+		public string Params { get; set; }
+		public DateTime StartTime { get; set; }
+		public DateTime EndTime { get; set; }
+		public byte[] ReportResult { get; set; }
+		public string ErrorMassage { get; set; }
+		public int Status { get; set; }
 	}
 }
