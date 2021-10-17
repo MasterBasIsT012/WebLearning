@@ -5,7 +5,7 @@ namespace WebLearning.Services
 {
 	public class RestClientReportService : IReportService
 	{
-		private RestClient restClient = new RestClient("http://localhost:5002/api/Reports");
+		private readonly RestClient restClient = new RestClient("https://localhost:5001");
 
 		public RestClientReportService()
 		{

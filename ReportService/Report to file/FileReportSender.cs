@@ -7,7 +7,7 @@ namespace ReportService.FileReport
 {
 	public class FileReportSender : ISender
 	{
-		private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+		private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		private readonly string reportsDirecotoryName = "ProcessReports";
 		private readonly string fileType = ".txt";
 		private static string path;

@@ -6,7 +6,7 @@ namespace WebLearning.Controllers
 	[Route("api/Reports")]
 	public class ReportController : Controller
 	{
-		private IReportService reportService;
+		private readonly IReportService reportService;
 
 		public ReportController(IReportService reportService)
 		{
@@ -14,7 +14,7 @@ namespace WebLearning.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Build([FromBody]string Params)
+		public IActionResult Build([FromBody] string Params)
 		{
 			int buildTaskId = reportService.Build(Params);
 

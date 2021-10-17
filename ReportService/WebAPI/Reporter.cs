@@ -5,7 +5,7 @@ namespace ReportService.WebAPI
 {
 	public class Reporter : IReporter
 	{
-		ISender sender;
+		private readonly ISender sender;
 
 		public Reporter([FromServices] ISender sender)
 		{

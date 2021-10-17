@@ -8,13 +8,13 @@ namespace ReportService.Services
 {
 	public class ReportsService : IDisposable, IReportService
 	{
-		private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+		private readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		private int Id = 0;
 		private readonly int timeoutTime = 30000;
-		private Dictionary<int, CancellationTokenSource> cancellationTokenSources = new Dictionary<int, CancellationTokenSource>();
-		private IReportBuilder reportBuilder;
-		private IReportsFactory reportFactory;
-		private IReporter reporter;
+		private readonly Dictionary<int, CancellationTokenSource> cancellationTokenSources = new Dictionary<int, CancellationTokenSource>();
+		private readonly IReportBuilder reportBuilder;
+		private readonly IReportsFactory reportFactory;
+		private readonly IReporter reporter;
 
 		public ReportsService(IReportBuilder reportBuilder, IReportsFactory reportFactory, IReporter reporter)
 		{

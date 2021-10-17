@@ -1,23 +1,25 @@
 ﻿using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using RestSharp;
+using NLog;
 
 namespace WebLearning.Controllers
 {
 	public class MainController : Controller
 	{
-		private IReportService reportService;
+		private readonly Logger logger = LogManager.GetCurrentClassLogger();
+		private readonly IReportService reportService;
 
-		public MainController(IReportService reportService)
+		public MainController([FromServices] IReportService reportService)
 		{
 			this.reportService = reportService;
 		}
 
-		//либо вызывает reportService из связей или дергает микросервис
 		[HttpGet]
-		public IActionResult Build([FromBody]string Params)
+		public IActionResult Build([FromBody] string Params)
 		{
+			logger.Debug("Build method started");
 			int id = reportService.Build(Params);
+			logger.Debug("Build method finished");
 			return Ok(id);
 		}
 	}

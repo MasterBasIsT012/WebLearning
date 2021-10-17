@@ -6,7 +6,7 @@ namespace ReportService.Data
 	public class ReportInfoRepository : IReportInfoRepository
 	{
 		static int Id = 0;
-		Dictionary<int, IReportInfo> reports = new Dictionary<int, IReportInfo>();
+		readonly Dictionary<int, IReportInfo> reports = new Dictionary<int, IReportInfo>();
 
 		public void CreateReportInfo(IReportInfo reportInfo)
 		{
@@ -20,8 +20,7 @@ namespace ReportService.Data
 
 		public IReportInfo GetReportInfo(int id)
 		{
-			IReportInfo reportInfo;
-			if (!reports.TryGetValue(id, out reportInfo))
+			if (!reports.TryGetValue(id, out IReportInfo reportInfo))
 				return null;
 			return reportInfo;
 		}

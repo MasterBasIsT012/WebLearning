@@ -8,12 +8,12 @@ namespace ReportService.Data
 	}
 	public class ReportInfo
 	{
-		private int RequestID;
-		private string[] Params;
-		private DateTime StartTime;
-		private DateTime EndTime;
-		private byte[] ReportResult;
-		private string ErrorNassage;
-		private ReportStatus Status;
+		private readonly int RequestID;
+		private readonly string[] Params;
+		private readonly DateTime StartTime;
+		private readonly DateTime EndTime;
+		private readonly byte[] ReportResult;
+		private readonly string ErrorNassage;
+		private readonly ReportStatus Status;
 	}
 }

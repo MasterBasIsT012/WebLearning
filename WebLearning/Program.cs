@@ -9,8 +9,8 @@ namespace WebLearning
 {
 	public class Program
 	{
-		static Logger logger = LogManager.GetCurrentClassLogger();
-		static string reportsDirecotoryName = "ProcessReports";
+		static readonly Logger logger = LogManager.GetCurrentClassLogger();
+		static readonly string reportsDirecotoryName = "ProcessReports";
 
 		public static void Main(string[] args)
 		{

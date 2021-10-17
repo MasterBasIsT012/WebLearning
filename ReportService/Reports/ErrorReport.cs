@@ -5,7 +5,7 @@ namespace ReportService.Reports
 {
 	public class ErrorReport : IReport
 	{
-		private string type = "Error";
+		private readonly string type = "Error";
 		private int id;
 		private byte[] data;
 

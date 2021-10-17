@@ -5,7 +5,7 @@ namespace ReportService.Reports
 {
 	public class TimeoutReport : IReport
 	{
-		private string type = "Timeout";
+		private readonly string type = "Timeout";
 		private int id;
 		private byte[] data;
 

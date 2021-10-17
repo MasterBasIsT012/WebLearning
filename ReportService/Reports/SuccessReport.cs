@@ -4,7 +4,7 @@ namespace ReportService.Reports
 {
 	public class SuccessReport : IReport
 	{
-		private string type = "Report";
+		private readonly string type = "Report";
 		private int id;
 		private byte[] data;
 
