@@ -1,6 +1,9 @@
 ﻿using Infrastructure.Interfaces;
 using RestSharp;
 using NLog;
+using System.IO;
+using System.Reflection;
+using System;
 
 namespace WebLearning.Services
 {
@@ -8,29 +11,51 @@ namespace WebLearning.Services
 	{
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private readonly RestClient restClient = new RestClient("https://localhost:5001");
+		private readonly string reportsRoute = "api/Report/";
+		private readonly string reportsPath;
+		private readonly string reportsDirectoryName = "ProcessReports";
 
 		public RestClientReportService()
 		{
-			//создать RestClient
-			//URL достать из appsettings используется ConfigurationBuilder
+			try
+			{
+				logger.Info("Reports directory path setting on ReportService started");
+				RestRequest restRequest = new RestRequest(GetReportsMethodRoute("SetPath"));
+				restRequest.AddJsonBody(GetDirectoryPath(reportsDirectoryName));
+				restClient.Post(restRequest);
+				logger.Info("Reports directory path setting on ReportService finished");
+			}
+			catch (Exception ex)
+			{
+				logger.Error("Reports directory path setting on ReportService crashed", ex);
+			}
+		}
+		static string GetDirectoryPath(string directoryName)
+		{
+			DirectoryInfo dir = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
+			string path = string.Concat(dir.Parent.FullName, "\\", directoryName);
+			return path;
 		}
 
 		public int Build(string Params)
 		{
 			logger.Debug("Build method started from RestClientReprtService");
-			RestRequest restRequest = new RestRequest("Report/Build");
+			RestRequest restRequest = new RestRequest(GetReportsMethodRoute("Build"));
 			restRequest.AddJsonBody(Params);
-			int id = int.Parse(restClient.Get(restRequest).Content);
+			int.TryParse(restClient.Post(restRequest).Content, out int id);
 			logger.Info($"Build method finished");
 
 			return id;
 		}
 
+		
+
 		public void Stop(int id)
 		{
 			logger.Debug("Stop method started from RestClientReprtService");
-			RestRequest restRequest = new RestRequest("Report/Stop");
+			RestRequest restRequest = new RestRequest(GetReportsMethodRoute("Stop"));
 			restRequest.AddJsonBody(id.ToString());
+			restClient.Post(restRequest);
 			logger.Info($"Report {id}: report stopped");
 		}
 
@@ -42,6 +67,11 @@ namespace WebLearning.Services
 		public void Dispose()
 		{
 			throw new System.NotImplementedException();
+		}
+		
+		private string GetReportsMethodRoute(string methodName)
+		{
+			return string.Concat(reportsRoute, methodName);
 		}
 	}
 }

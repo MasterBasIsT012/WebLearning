@@ -10,11 +10,11 @@ namespace ReportService.FileReport
 		private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		private readonly string reportsDirecotoryName = "ProcessReports";
 		private readonly string fileType = ".txt";
-		private static string path;
+		public static string Path { get; set; }
 
 		public FileReportSender()
 		{
-			path = GetDirectoryPath(reportsDirecotoryName);
+			Path = GetDirectoryPath(reportsDirecotoryName);
 		}
 		private string GetDirectoryPath(string directoryName)
 		{
@@ -40,7 +40,7 @@ namespace ReportService.FileReport
 		}
 		private string GenPath(string type, int id)
 		{
-			return string.Concat(path, "\\", type, "_", id.ToString(), fileType);
+			return string.Concat(Path, "\\", type, "_", id.ToString(), fileType);
 		}
 	}
 }

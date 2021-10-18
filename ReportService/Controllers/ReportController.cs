@@ -1,8 +1,10 @@
 ﻿using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using ReportService.FileReport;
 
 namespace WebLearning.Controllers
 {
+	[Route("api/Report/{action}")]
 	public class ReportController : Controller
 	{
 		private readonly IReportService reportService;
@@ -12,12 +14,20 @@ namespace WebLearning.Controllers
 			this.reportService = reportService;
 		}
 
-		[HttpGet]
+		[HttpPost]
 		public IActionResult Build([FromBody]string Params)
 		{
 			int buildTaskId = reportService.Build(Params);
 
 			return Ok(buildTaskId);
+		}
+
+		[HttpPost]
+		public IActionResult SetPath([FromBody]string path)
+		{
+			FileReportSender.Path = path;
+
+			return Ok();
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace WebLearning.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Stop([FromBody]int id)
+		public IActionResult Stop([FromQuery]int id)
 		{
 			reportService.Stop(id);
 
