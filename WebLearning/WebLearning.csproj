@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\PluginService\PluginService.csproj" />
     <ProjectReference Include="..\ReportService\ReportService.csproj" />
   </ItemGroup>
 

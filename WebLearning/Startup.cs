@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using ReportService.FileReport;
-using ReportService.Services;
 using ReportService.ReportsAPI;
 using ReportService.Data;
 using WebLearning.Services;
+using PluginService.Plugining;
 
 namespace WebLearning
 {
@@ -15,6 +15,7 @@ namespace WebLearning
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
+			services.AddSingleton<IPluginService, PluginsService>();
 			services.AddSingleton<IReportService, RestClientReportService>();
 			services.AddTransient<IReportBuilder, ReportBuilder>();
 			services.AddTransient<IReportsFactory, FileReportsFactory>();

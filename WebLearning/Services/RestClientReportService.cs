@@ -12,7 +12,6 @@ namespace WebLearning.Services
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private readonly RestClient restClient = new RestClient("https://localhost:5001");
 		private readonly string reportsRoute = "api/Report/";
-		private readonly string reportsPath;
 		private readonly string reportsDirectoryName = "ProcessReports";
 
 		public RestClientReportService()
@@ -30,11 +29,15 @@ namespace WebLearning.Services
 				logger.Error("Reports directory path setting on ReportService crashed", ex);
 			}
 		}
-		static string GetDirectoryPath(string directoryName)
+		private string GetDirectoryPath(string directoryName)
 		{
 			DirectoryInfo dir = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
 			string path = string.Concat(dir.Parent.FullName, "\\", directoryName);
 			return path;
+		}
+		private string GetReportsMethodRoute(string action)
+		{
+			return string.Concat(reportsRoute, action);
 		}
 
 		public int Build(string Params)
@@ -48,8 +51,6 @@ namespace WebLearning.Services
 			return id;
 		}
 
-		
-
 		public void Stop(int id)
 		{
 			logger.Debug("Stop method started from RestClientReprtService");
@@ -61,17 +62,12 @@ namespace WebLearning.Services
 
 		public void KillAllTasks()
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public void Dispose()
 		{
-			throw new System.NotImplementedException();
-		}
-		
-		private string GetReportsMethodRoute(string methodName)
-		{
-			return string.Concat(reportsRoute, methodName);
+			throw new NotImplementedException();
 		}
 	}
 }

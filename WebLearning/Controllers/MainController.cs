@@ -4,17 +4,20 @@ using NLog;
 
 namespace WebLearning.Controllers
 {
-	[Route("api/Reports/{action}")]
+	[Route("api")]
 	public class MainController : Controller
 	{
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private readonly IReportService reportService;
+		private readonly IPluginService pluginService;
 
-		public MainController([FromServices] IReportService reportService)
+		public MainController([FromServices] IReportService reportService, [FromServices] IPluginService pluginService)
 		{
 			this.reportService = reportService;
+			this.pluginService = pluginService;
 		}
 
+		[Route("Reports/Build")]
 		[HttpPost]
 		public IActionResult Build([FromBody]string Params)
 		{
@@ -23,12 +26,20 @@ namespace WebLearning.Controllers
 			return Ok(id);
 		}
 
-		[HttpGet]
-		public IActionResult Stop([FromQuery]int id)
+		[Route("Reports/Stop/{id}")]
+		[HttpPost]
+		public IActionResult Stop(int id)
 		{
 			reportService.Stop(id);
 
 			return Ok(id);
+		}
+
+		[Route("Plugins/GetPlugins")]
+		[HttpGet]
+		public IActionResult GetPlugins()
+		{
+			return Ok(pluginService.GetPlugins());
 		}
 	}
 }

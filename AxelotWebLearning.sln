@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportService", "ReportServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginService", "PluginService\PluginService.csproj", "{ADE06262-3E7C-4FAE-9234-7C9D896BD99E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "Plugins\Plugins.csproj", "{40CEBB55-5859-41DC-9368-C7A71FE5D8D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{ADE06262-3E7C-4FAE-9234-7C9D896BD99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADE06262-3E7C-4FAE-9234-7C9D896BD99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADE06262-3E7C-4FAE-9234-7C9D896BD99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40CEBB55-5859-41DC-9368-C7A71FE5D8D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40CEBB55-5859-41DC-9368-C7A71FE5D8D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40CEBB55-5859-41DC-9368-C7A71FE5D8D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40CEBB55-5859-41DC-9368-C7A71FE5D8D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
