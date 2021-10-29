@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace PluginService.Plugining
+namespace PluginService.Services
 {
 	public class PluginsService : IPluginService
 	{

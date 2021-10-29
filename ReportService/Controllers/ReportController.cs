@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ReportService.FileReport;
 
-namespace WebLearning.Controllers
+namespace ReportService.Controllers
 {
 	[Route("api/Report/{action}")]
 	public class ReportController : Controller

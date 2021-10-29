@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace Data.Plugining
+namespace PluginService.Data
 {
 	public class PluginMethodInfo : IPluginMethodInfo
 	{

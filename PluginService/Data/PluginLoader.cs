@@ -1,5 +1,4 @@
-﻿using Data.Plugining;
-using Infrastructure.Interfaces;
+﻿using Infrastructure.Interfaces;
 using NLog;
 using Plugins;
 using System;
@@ -7,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Interfaces.Plugining
+namespace PluginService.Data
 {
 	public class PluginLoader : IPluginLoader
 	{
@@ -18,7 +17,7 @@ namespace Interfaces.Plugining
 
 		public List<IPluginMethodInfo> PluginMethods { get => pluginMethods; }
 
-		public PluginLoader(string Path)
+		public PluginLoader()
 		{
 			path = GetDirectoryPath(directoryName);
 		}

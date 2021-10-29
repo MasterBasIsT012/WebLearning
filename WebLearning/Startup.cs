@@ -6,7 +6,6 @@ using ReportService.FileReport;
 using ReportService.ReportsAPI;
 using ReportService.Data;
 using WebLearning.Services;
-using PluginService.Plugining;
 
 namespace WebLearning
 {
@@ -15,7 +14,7 @@ namespace WebLearning
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
-			services.AddSingleton<IPluginService, PluginsService>();
+			services.AddSingleton<IPluginService, RestClientPluginService>();
 			services.AddSingleton<IReportService, RestClientReportService>();
 			services.AddTransient<IReportBuilder, ReportBuilder>();
 			services.AddTransient<IReportsFactory, FileReportsFactory>();

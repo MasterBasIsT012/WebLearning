@@ -1,12 +1,14 @@
-﻿using NLog;
+﻿using Infrastructure.Interfaces;
+using NLog;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
 namespace WebLearning.Services
 {
-	public class RestClientPluginService
+	public class RestClientPluginService: IPluginService
 	{
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private readonly RestClient restClient = new RestClient();
@@ -17,15 +19,15 @@ namespace WebLearning.Services
 		{
 			try
 			{
-				logger.Info("Reports directory path setting on ReportService started");
+				logger.Info("Plugins directory path setting on ReportService started");
 				RestRequest restRequest = new RestRequest(GetPluginsMethodRoute("SetPath"));
 				restRequest.AddJsonBody(GetDirectoryPath(pluginsDirectoryName));
 				restClient.Post(restRequest);
-				logger.Info("Reports directory path setting on ReportService finished");
+				logger.Info("Plugins directory path setting on ReportService finished");
 			}
 			catch (Exception ex)
 			{
-				logger.Error("Reports directory path setting on ReportService crashed", ex);
+				logger.Error("Plugins directory path setting on ReportService crashed", ex);
 			}
 		}
 		private string GetPluginsMethodRoute(string action)
@@ -37,6 +39,21 @@ namespace WebLearning.Services
 			DirectoryInfo dir = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
 			string path = string.Concat(dir.Parent.FullName, "\\", directoryName);
 			return path;
+		}
+
+		public void ExecSimplePlugin(string method)
+		{
+			throw new NotImplementedException();
+		}
+
+		public List<IPluginMethodInfo> GetPlugins()
+		{
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<IPluginMethodInfo> GetSimplePlugins()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

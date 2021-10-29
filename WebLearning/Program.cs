@@ -28,10 +28,10 @@ namespace WebLearning
 		private static void Initialization()
 		{
 			logger.Info("Initialization started");
-			CreateAndClearDirectory(reportsDirecotoryName);
+			CreateOrClearDirectory(reportsDirecotoryName);
 			logger.Info("Initialization finished");
 		}
-		static void CreateAndClearDirectory(string directoryName)
+		static void CreateOrClearDirectory(string directoryName)
 		{
 			logger.Info($"Directory {directoryName} installation started");
 			string path = GetDirectoryPath(directoryName);

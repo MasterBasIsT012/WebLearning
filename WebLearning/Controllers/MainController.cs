@@ -26,9 +26,9 @@ namespace WebLearning.Controllers
 			return Ok(id);
 		}
 
-		[Route("Reports/Stop/{id}")]
+		[Route("Reports/Stop")]
 		[HttpPost]
-		public IActionResult Stop(int id)
+		public IActionResult Stop([FromQuery]int id)
 		{
 			reportService.Stop(id);
 
