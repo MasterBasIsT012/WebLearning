@@ -13,7 +13,7 @@ namespace ReportService
 	{
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc();
+			services.AddControllers();
 			services.AddSingleton<IReportService, ReportsService>();
 			services.AddTransient<IReportBuilder, ReportBuilder>();
 			services.AddTransient<IReportsFactory, FileReportsFactory>();

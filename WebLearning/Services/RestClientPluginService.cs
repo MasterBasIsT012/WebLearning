@@ -1,17 +1,21 @@
 ﻿using Infrastructure.Interfaces;
 using NLog;
 using RestSharp;
+using Newtonsoft;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using RestSharp.Serializers.NewtonsoftJson;
+using Newtonsoft.Json;
+using Plugins;
 
 namespace WebLearning.Services
 {
 	public class RestClientPluginService: IPluginService
 	{
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
-		private readonly RestClient restClient = new RestClient();
+		private readonly RestClient restClient = new RestClient("https://localhost:5002");
 		private readonly string pluginsDirectoryName = "Plugins";
 		private readonly string pluginsRoute = "api/Plugin";
 
@@ -20,15 +24,21 @@ namespace WebLearning.Services
 			try
 			{
 				logger.Info("Plugins directory path setting on ReportService started");
-				RestRequest restRequest = new RestRequest(GetPluginsMethodRoute("SetPath"));
-				restRequest.AddJsonBody(GetDirectoryPath(pluginsDirectoryName));
+				restClient.UseNewtonsoftJson();
+				RestRequest restRequest = GetPluginRequest("LoadPlugins");
 				restClient.Post(restRequest);
 				logger.Info("Plugins directory path setting on ReportService finished");
 			}
 			catch (Exception ex)
 			{
-				logger.Error("Plugins directory path setting on ReportService crashed", ex);
+				logger.Error(ex);
 			}
+		}
+		private RestRequest GetPluginRequest(string methodName)
+		{
+			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName));
+			restRequest.AddJsonBody(GetDirectoryPath(pluginsDirectoryName));
+			return restRequest;
 		}
 		private string GetPluginsMethodRoute(string action)
 		{
@@ -48,10 +58,17 @@ namespace WebLearning.Services
 
 		public List<IPluginMethodInfo> GetPlugins()
 		{
-			throw new NotImplementedException();
+			RestRequest restRequest = GetPluginRequest("GetPlugins");
+			string content = restClient.Get(restRequest).Content;
+			return JsonConvert.DeserializeObject<List<IPluginMethodInfo>>(content);
 		}
 
 		public IEnumerable<IPluginMethodInfo> GetSimplePlugins()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LoadPlugins(IPluginLoader loader)
 		{
 			throw new NotImplementedException();
 		}

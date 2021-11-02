@@ -26,7 +26,6 @@ namespace ReportService.Controllers
 		public IActionResult SetPath([FromBody]string path)
 		{
 			FileReportSender.Path = path;
-
 			return Ok();
 		}
 	}

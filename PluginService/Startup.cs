@@ -11,10 +11,9 @@ namespace PluginService
 	{
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc();
-			services.AddTransient<IPluginLoader, PluginLoader>();
-			services.AddTransient<IPluginMethodInfo, PluginMethodInfo>();
+			services.AddControllers();
 			services.AddSingleton<IPluginService, PluginsService>();
+			services.AddTransient<IPluginLoader, PluginLoader>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

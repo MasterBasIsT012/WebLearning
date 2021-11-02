@@ -21,7 +21,7 @@ namespace WebLearning
 			}
 			catch (Exception ex)
 			{
-				logger.Fatal("App initialization failled", ex);
+				logger.Fatal(ex);
 			}
 		}
 

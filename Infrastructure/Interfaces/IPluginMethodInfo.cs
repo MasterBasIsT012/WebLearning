@@ -5,11 +5,11 @@ namespace Infrastructure.Interfaces
 {
 	public interface IPluginMethodInfo
 	{
-		string ClassName { get; }
-		ParameterInfo[] Arguments { get; }
-		object Instance { get; }
-		MethodInfo Method { get; }
-		string MethodName { get; }
-		Type ReturnType { get; }
+		public string ClassName { get; }
+		public ParameterInfo[] Arguments { get; }
+		public object Instance { get; }
+		public MethodInfo Method { get; }
+		public string MethodName { get; }
+		public Type ReturnType { get; }
 	}
 }

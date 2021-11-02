@@ -26,7 +26,7 @@ namespace WebLearning.Services
 			}
 			catch (Exception ex)
 			{
-				logger.Error("Reports directory path setting on ReportService crashed", ex);
+				logger.Error(ex);
 			}
 		}
 		private string GetDirectoryPath(string directoryName)

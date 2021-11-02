@@ -13,25 +13,25 @@ namespace PluginService.Data
 		Logger logger = LogManager.GetCurrentClassLogger();
 		private List<IPluginMethodInfo> pluginMethods = new List<IPluginMethodInfo>();
 		private readonly string directoryName = "Plugins";
-		private string path;
+		public static string Path { get; set; }
+		public static IPluginLoader instance = null;
+
+		public static IPluginLoader Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = new PluginLoader();
+				return instance;
+			}
+		}
 
 		public List<IPluginMethodInfo> PluginMethods { get => pluginMethods; }
-
-		public PluginLoader()
-		{
-			path = GetDirectoryPath(directoryName);
-		}
-		private string GetDirectoryPath(string directoryName)
-		{
-			DirectoryInfo dir = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
-			string path = string.Concat(dir.Parent.FullName, "\\", directoryName);
-			return path;
-		}
 
 		public void LoadPlugins()
 		{
 			logger.Debug("LoadPlugins method started from PluginLoader");
-			foreach (string file in Directory.GetFiles(path))
+			foreach (string file in Directory.GetFiles(Path))
 				GetPluginMethodsFromAssembly(file);
 			logger.Debug("LoadPlugins methods finished");
 		}

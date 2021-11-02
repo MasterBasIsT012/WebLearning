@@ -10,10 +10,10 @@ namespace PluginService.Services
 {
 	public class PluginsService : IPluginService
 	{
-		Logger logger = LogManager.GetCurrentClassLogger();
+		static Logger logger = LogManager.GetCurrentClassLogger();
 		private static List<IPluginMethodInfo> pluginMethods = new List<IPluginMethodInfo>();
 
-		public PluginsService(IPluginLoader loader)
+		public void LoadPlugins(IPluginLoader loader)
 		{
 			logger.Info("Plugins loading started");
 			loader.LoadPlugins();
