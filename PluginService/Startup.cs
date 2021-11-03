@@ -13,7 +13,7 @@ namespace PluginService
 		{
 			services.AddControllers();
 			services.AddSingleton<IPluginService, PluginsService>();
-			services.AddTransient<IPluginLoader, PluginLoader>();
+			services.AddSingleton<IPluginLoader, PluginLoader>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

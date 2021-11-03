@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NLog;
 
 namespace WebLearning.Controllers
@@ -39,7 +40,7 @@ namespace WebLearning.Controllers
 		[HttpGet]
 		public IActionResult GetPlugins()
 		{
-			return Ok(pluginService.GetPlugins());
+			return Ok(JsonConvert.SerializeObject(pluginService.GetPlugins()));
 		}
 	}
 }
