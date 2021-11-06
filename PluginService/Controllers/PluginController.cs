@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using PluginService.Data;
 using Infrastructure.DTOs;
-using System;
 using Plugins;
 using System.Reflection;
 

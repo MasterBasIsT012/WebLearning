@@ -16,11 +16,6 @@ namespace WebLearning
 			services.AddControllers();
 			services.AddSingleton<IPluginService, RestClientPluginService>();
 			services.AddSingleton<IReportService, RestClientReportService>();
-			services.AddTransient<IReportBuilder, ReportBuilder>();
-			services.AddTransient<IReportsFactory, FileReportsFactory>();
-			services.AddTransient<IReporter, Reporter>();
-			services.AddTransient<ISender, FileReportSender>();
-			services.AddTransient<IReportInfoRepository, ReportInfoRepository>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

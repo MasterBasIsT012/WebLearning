@@ -14,7 +14,7 @@ namespace WebLearning.Controllers
 		private readonly IReportService reportService;
 		private readonly IPluginService pluginService;
 
-		public MainController([FromServices] IReportService reportService, [FromServices] IPluginService pluginService)
+		public MainController(IReportService reportService, IPluginService pluginService)
 		{
 			this.reportService = reportService;
 			this.pluginService = pluginService;
