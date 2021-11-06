@@ -6,12 +6,14 @@ namespace PluginService.Data
 {
 	public class PluginMethodInfo : IPluginMethodInfo
 	{
-		public string ClassName { get; }
-		public string MethodName { get; }
-		public object Instance { get; }
-		public MethodInfo Method { get; }
-		public Type ReturnType { get; }
-		public ParameterInfo[] Arguments { get; }
+		public string ClassName { get; set; }
+		public string MethodName { get; set; }
+		public object Instance { get; set; }
+		public MethodInfo Method { get; set; }
+		public Type ReturnType { get; set; }
+		public ParameterInfo[] Arguments { get; set; }
+
+		public PluginMethodInfo() { }
 
 		public PluginMethodInfo(Type t, string methodName)
 		{

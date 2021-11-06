@@ -29,15 +29,15 @@ namespace WebLearning.Services
 				logger.Error(ex);
 			}
 		}
+		private string GetReportsMethodRoute(string action)
+		{
+			return string.Concat(reportsRoute, action);
+		}
 		private string GetDirectoryPath(string directoryName)
 		{
 			DirectoryInfo dir = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
 			string path = string.Concat(dir.Parent.FullName, "\\", directoryName);
 			return path;
-		}
-		private string GetReportsMethodRoute(string action)
-		{
-			return string.Concat(reportsRoute, action);
 		}
 
 		public int Build(string Params)

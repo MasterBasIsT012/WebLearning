@@ -1,7 +1,9 @@
-﻿using Infrastructure.Interfaces;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NLog;
+using System.Collections.Generic;
 
 namespace WebLearning.Controllers
 {
@@ -40,7 +42,8 @@ namespace WebLearning.Controllers
 		[HttpGet]
 		public IActionResult GetPlugins()
 		{
-			return Ok(JsonConvert.SerializeObject(pluginService.GetPlugins()));
+			List<ClassDTO> plugins = pluginService.GetPluginsDTOs();
+			return Ok(JsonConvert.SerializeObject(plugins));
 		}
 	}
 }

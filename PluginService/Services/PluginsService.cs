@@ -1,4 +1,5 @@
-﻿using Infrastructure.Interfaces;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Interfaces;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,11 @@ namespace PluginService.Services
 			object[] args = { methodArgument };
 			string output = (string)method.Invoke(pluginMethod.Instance, args);
 			Console.WriteLine(output);
+		}
+
+		public List<ClassDTO> GetPluginsDTOs()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

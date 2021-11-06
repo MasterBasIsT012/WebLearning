@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Infrastructure.DTOs;
+using System.Collections.Generic;
 
 namespace Infrastructure.Interfaces
 {
@@ -7,6 +8,7 @@ namespace Infrastructure.Interfaces
 		void LoadPlugins(IPluginLoader loader);
 		void ExecSimplePlugin(string method);
 		List<IPluginMethodInfo> GetPlugins();
+		List<ClassDTO> GetPluginsDTOs();
 		IEnumerable<IPluginMethodInfo> GetSimplePlugins();
 	}
 }

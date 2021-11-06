@@ -9,6 +9,8 @@ using System.Reflection;
 using RestSharp.Serializers.NewtonsoftJson;
 using Newtonsoft.Json;
 using Plugins;
+using Infrastructure.DTOs;
+using PluginService.Data;
 
 namespace WebLearning.Services
 {
@@ -16,15 +18,14 @@ namespace WebLearning.Services
 	{
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private readonly RestClient restClient = new RestClient("https://localhost:5002");
+		private readonly string pluginsRoute = "api/Plugin/";
 		private readonly string pluginsDirectoryName = "Plugins";
-		private readonly string pluginsRoute = "api/Plugin";
 
 		public RestClientPluginService()
 		{
 			try
 			{
 				logger.Info("Plugins directory path setting on ReportService started");
-				restClient.UseNewtonsoftJson();
 				RestRequest restRequest = GetPluginRequest("LoadPlugins");
 				restClient.Post(restRequest);
 				logger.Info("Plugins directory path setting on ReportService finished");
@@ -58,19 +59,25 @@ namespace WebLearning.Services
 
 		public List<IPluginMethodInfo> GetPlugins()
 		{
+			throw new NotImplementedException();
+		}
+		
+		public List<ClassDTO> GetPluginsDTOs()
+		{
 			RestRequest restRequest = GetPluginRequest("GetPlugins");
 			string content = restClient.Get(restRequest).Content;
-			return JsonConvert.DeserializeObject<List<IPluginMethodInfo>>(content);
+			return JsonConvert.DeserializeObject<List<ClassDTO>>(content);
 		}
 
 		public IEnumerable<IPluginMethodInfo> GetSimplePlugins()
 		{
 			throw new NotImplementedException();
 		}
-
+		
 		public void LoadPlugins(IPluginLoader loader)
 		{
 			throw new NotImplementedException();
 		}
+
 	}
 }
