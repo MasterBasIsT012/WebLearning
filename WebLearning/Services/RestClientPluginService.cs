@@ -35,7 +35,7 @@ namespace WebLearning.Services
 		}
 		private RestRequest GetPluginRequest(string methodName)
 		{
-			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName));
+			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName), DataFormat.None);
 			return restRequest;
 		}
 		private string GetPluginsMethodRoute(string action)
