@@ -53,5 +53,13 @@ namespace WebLearning.Controllers
 			List<ClassDTO> simplePlugins = pluginService.GetSimplePluginsDTOs();
 			return Ok(JsonConvert.SerializeObject(simplePlugins));
 		}
+
+		[Route("Plugins/ExecSimplePlugin")]
+		[HttpGet]
+		public IActionResult ExecSimplePlugin([FromBody]string method)
+		{
+			pluginService.ExecSimplePlugin(method);
+			return Ok();
+		}
 	}
 }

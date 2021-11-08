@@ -45,5 +45,13 @@ namespace PluginService.Controllers
 			pluginService.LoadPlugins(PluginLoader.Instance);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ExecSimplePlugin")]
+		public IActionResult ExecSimplePlugin([FromBody]string method)
+		{
+			pluginService.ExecSimplePlugin(method);
+			return Ok();
+		}
 	}
 }
