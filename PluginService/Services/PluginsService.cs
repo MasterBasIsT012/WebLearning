@@ -28,13 +28,13 @@ namespace PluginService.Services
 			return pluginMethods;
 		}
 
-		public IEnumerable<IPluginMethodInfo> GetSimplePlugins()
+		public List<IPluginMethodInfo> GetSimplePlugins()
 		{
 			IEnumerable<IPluginMethodInfo> methods =
 				pluginMethods.
 				Where(method => method.ReturnType == typeof(string)).
 				Where(method => method.Arguments.Length == 1 && method.Arguments[0].ParameterType == typeof(string));
-			return methods;
+			return (List<IPluginMethodInfo>)methods;
 		}
 
 		public void ExecSimplePlugin(string method)
@@ -90,6 +90,11 @@ namespace PluginService.Services
 		}
 
 		public List<ClassDTO> GetPluginsDTOs()
+		{
+			throw new NotImplementedException();
+		}
+
+		public List<ClassDTO> GetSimplePluginsDTOs()
 		{
 			throw new NotImplementedException();
 		}

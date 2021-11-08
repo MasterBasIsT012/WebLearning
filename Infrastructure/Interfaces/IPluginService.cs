@@ -9,6 +9,7 @@ namespace Infrastructure.Interfaces
 		void ExecSimplePlugin(string method);
 		List<IPluginMethodInfo> GetPlugins();
 		List<ClassDTO> GetPluginsDTOs();
-		IEnumerable<IPluginMethodInfo> GetSimplePlugins();
+		List<IPluginMethodInfo> GetSimplePlugins();
+		List<ClassDTO> GetSimplePluginsDTOs();
 	}
 }

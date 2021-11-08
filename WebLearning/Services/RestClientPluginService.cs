@@ -68,9 +68,18 @@ namespace WebLearning.Services
 			return JsonConvert.DeserializeObject<List<ClassDTO>>(content);
 		}
 
-		public IEnumerable<IPluginMethodInfo> GetSimplePlugins()
+		public List<IPluginMethodInfo> GetSimplePlugins()
 		{
 			throw new NotImplementedException();
+		}
+		
+		public List<ClassDTO> GetSimplePluginsDTOs()
+		{
+			RestRequest restRequest = GetPluginRequest("GetSimplePlugins");
+			string content = restClient.Get(restRequest).Content;
+			content = content.Replace("\\", "");
+			content = content.Trim('\\', '\"');
+			return JsonConvert.DeserializeObject<List<ClassDTO>>(content);
 		}
 		
 		public void LoadPlugins(IPluginLoader loader)
