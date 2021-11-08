@@ -30,11 +30,11 @@ namespace PluginService.Services
 
 		public List<IPluginMethodInfo> GetSimplePlugins()
 		{
-			IEnumerable<IPluginMethodInfo> methods =
+			List<IPluginMethodInfo> methods =
 				pluginMethods.
 				Where(method => method.ReturnType == typeof(string)).
-				Where(method => method.Arguments.Length == 1 && method.Arguments[0].ParameterType == typeof(string));
-			return (List<IPluginMethodInfo>)methods;
+				Where(method => method.Arguments.Length == 1 && method.Arguments[0].ParameterType == typeof(string)).ToList();
+			return methods;
 		}
 
 		public void ExecSimplePlugin(string method)
