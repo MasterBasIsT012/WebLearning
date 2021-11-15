@@ -38,7 +38,7 @@ namespace WebLearning.Services
 		}
 		private RestRequest GetPluginRequest(string methodName)
 		{
-			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName));
+			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName), DataFormat.Json);
 			return restRequest;
 		}
 		private string GetPluginsMethodRoute(string action)
@@ -101,8 +101,12 @@ namespace WebLearning.Services
 		public string ExecSimplePlugin(string method)
 		{
 			RestRequest restRequest = GetPluginRequest(execSimplePlugin);
+			restRequest.AddJsonBody(method);
 			string content = restClient.Get(restRequest).Content;
-			return string.Empty;
+			content = content.Replace("\\", "");
+			content = content.Trim('\\', '\"');
+			SimplePluginDTO simplePluginDTO = JsonConvert.DeserializeObject<SimplePluginDTO>(content);
+			return simplePluginDTO.Result;
 		}
 		
 		public void LoadPlugins(IPluginLoader loader)

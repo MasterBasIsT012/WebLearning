@@ -32,8 +32,10 @@ namespace PluginService.Controllers
 		public IActionResult GetSimplePlugins()
 		{
 			List<IPluginMethodInfo> simplePlugins = pluginService.GetSimplePlugins();
-			PluginsDTO pluginsDTO = new PluginsDTO();
-			pluginsDTO.Plugins = ClassDTO.GetPluginsDTOs(simplePlugins);
+			PluginsDTO pluginsDTO = new PluginsDTO()
+			{
+				Plugins = ClassDTO.GetPluginsDTOs(simplePlugins)
+			};
 			return Ok(JsonConvert.SerializeObject(pluginsDTO));
 		}
 
