@@ -15,7 +15,7 @@ namespace ReportService.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Build([FromBody]string Params)
+		public IActionResult Build([FromBody] string Params)
 		{
 			int buildTaskId = reportService.Build(Params);
 
@@ -23,7 +23,7 @@ namespace ReportService.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult SetPath([FromBody]string path)
+		public IActionResult SetPath([FromBody] string path)
 		{
 			FileReportSender.Path = path;
 			return Ok();

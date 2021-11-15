@@ -9,7 +9,7 @@ namespace ReportService.ReportsAPI
 	public class ReportBuilder : IReportBuilder
 	{
 		public byte[] BuildReport(IReportInfo reportInfo, ref IReportInfoRepository reportInfoRepository, CancellationToken token)
-		{ 
+		{
 			try
 			{
 				reportInfo.StartTime = DateTime.Now;
@@ -23,7 +23,7 @@ namespace ReportService.ReportsAPI
 			}
 			catch (Exception)
 			{
-				reportInfo.EndTime= DateTime.Now;
+				reportInfo.EndTime = DateTime.Now;
 				reportInfo.Status = (int)ReportStatus.Error;
 				reportInfoRepository.UpdateReportInfo(reportInfo.ID, reportInfo);
 				return reportInfo.ReportResult;

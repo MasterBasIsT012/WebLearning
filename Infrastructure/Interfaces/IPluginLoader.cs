@@ -4,7 +4,8 @@ namespace Infrastructure.Interfaces
 {
 	public interface IPluginLoader
 	{
-		List<IPluginMethodInfo> PluginMethods { get; }
+		public List<IPluginMethodInfo> PluginMethods { get; }
+		public List<IPluginMethodInstance> PluginMethodInstances { get; }
 
 		void LoadPlugins();
 	}

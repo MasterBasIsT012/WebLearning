@@ -2,9 +2,6 @@ using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using ReportService.FileReport;
-using ReportService.ReportsAPI;
-using ReportService.Data;
 using WebLearning.Services;
 
 namespace WebLearning

@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ReportService.ReportsAPI
 {

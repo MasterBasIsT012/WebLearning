@@ -23,22 +23,11 @@ namespace Infrastructure.DTOs
 			MethodInfoDTO methodInfoDTO = new MethodInfoDTO()
 			{
 				Name = plugin.MethodName,
-				ReturnTypeName = plugin.ReturnType.Name,
-				Args = GetParameters(plugin)
+				ReturnTypeName = plugin.ReturnType,
+				Args = plugin.Arguments
 			};
 
 			return methodInfoDTO;
-		}
-		private List<string> GetParameters(IPluginMethodInfo plugin)
-		{
-			List<string> parameters = new List<string>();
-
-			for (int i = 0; i < plugin.Arguments.Length; i++)
-			{
-				parameters.Add(plugin.Arguments[i].ParameterType.Name);
-			}
-
-			return parameters;
 		}
 	}
 }

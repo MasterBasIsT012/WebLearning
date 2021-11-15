@@ -3,7 +3,7 @@
 namespace Plugins
 {
 	[AttributeUsage(AttributeTargets.Class)]
-	public class Plugin: Attribute
+	public class Plugin : Attribute
 	{
 		public string Version;
 	}

@@ -10,9 +10,10 @@ namespace PluginService.Data
 {
 	public class PluginLoader : IPluginLoader
 	{
-		Logger logger = LogManager.GetCurrentClassLogger();
-		private List<IPluginMethodInfo> pluginMethods = new List<IPluginMethodInfo>();
-		private readonly string directoryName = "Plugins";
+		readonly Logger logger = LogManager.GetCurrentClassLogger();
+		private readonly List<IPluginMethodInfo> pluginMethodsInfo = new List<IPluginMethodInfo>();
+		private readonly List<IPluginMethodInstance> pluginMethodInstances = new List<IPluginMethodInstance>();
+
 		public static string Path { get; set; }
 		public static IPluginLoader instance = null;
 
@@ -26,32 +27,35 @@ namespace PluginService.Data
 			}
 		}
 
-		public List<IPluginMethodInfo> PluginMethods { get => pluginMethods; }
+		public List<IPluginMethodInfo> PluginMethods { get => pluginMethodsInfo; }
+		public List<IPluginMethodInstance> PluginMethodInstances { get => pluginMethodInstances; }
 
 		public void LoadPlugins()
 		{
 			logger.Debug("LoadPlugins method started from PluginLoader");
 			foreach (string file in Directory.GetFiles(Path))
-				GetPluginMethodsFromAssembly(file);
+				GetPluginMethods(file);
 			logger.Debug("LoadPlugins methods finished");
 		}
-		private void GetPluginMethodsFromAssembly(string filePath)
+		private void GetPluginMethods(string filePath)
 		{
 			Assembly assembly = Assembly.LoadFrom(filePath);
-			foreach (Type t in assembly.GetTypes())
-				if (IsPluginType(t))
-					GetPluginMethodsFromType(t);
+			foreach (Type type in assembly.GetTypes())
+				if (IsPluginType(type))
+					GetAndSavePluginMethods(type);
 		}
-		private void GetPluginMethodsFromType(Type t)
+		private void GetAndSavePluginMethods(Type type)
 		{
-			foreach (MethodInfo method in t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static))
+			foreach (MethodInfo method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static))
 				if (IsPluginMethod(method))
-					SavePluginMethod(t, method.Name);
+					SavePluginMethod(type, method.Name);
 		}
 		private void SavePluginMethod(Type t, string methodName)
 		{
 			PluginMethodInfo pluginMethod = new PluginMethodInfo(t, methodName);
-			pluginMethods.Add(pluginMethod);
+			PluginMethodInstance pluginMethodInstance = new PluginMethodInstance(t, methodName);
+			pluginMethodsInfo.Add(pluginMethod);
+			pluginMethodInstances.Add(pluginMethodInstance);
 		}
 		private bool IsPluginType(Type t)
 		{

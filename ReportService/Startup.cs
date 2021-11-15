@@ -2,10 +2,10 @@ using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using ReportService.FileReport;
-using ReportService.Services;
-using ReportService.ReportsAPI;
 using ReportService.Data;
+using ReportService.FileReport;
+using ReportService.ReportsAPI;
+using ReportService.Services;
 
 namespace ReportService
 {

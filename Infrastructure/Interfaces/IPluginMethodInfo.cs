@@ -1,15 +1,13 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Collections.Generic;
 
 namespace Infrastructure.Interfaces
 {
 	public interface IPluginMethodInfo
 	{
 		public string ClassName { get; set; }
-		public ParameterInfo[] Arguments { get; set; }
-		public object Instance { get; set; }
-		public MethodInfo Method { get; set; }
+		public string Vers { get; set; }
 		public string MethodName { get; set; }
-		public Type ReturnType { get; set; }
+		public string ReturnType { get; set; }
+		public List<string> Arguments { get; set; }
 	}
 }

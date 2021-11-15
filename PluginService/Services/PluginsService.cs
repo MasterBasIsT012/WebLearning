@@ -1,24 +1,25 @@
-﻿using Infrastructure.DTOs;
-using Infrastructure.Interfaces;
+﻿using Infrastructure.Interfaces;
 using NLog;
+using PluginService.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace PluginService.Services
 {
 	public class PluginsService : IPluginService
 	{
-		static Logger logger = LogManager.GetCurrentClassLogger();
-		private static List<IPluginMethodInfo> pluginMethods = new List<IPluginMethodInfo>();
+		static readonly Logger logger = LogManager.GetCurrentClassLogger();
+		private List<IPluginMethodInfo> pluginMethods = new List<IPluginMethodInfo>();
+		private List<IPluginMethodInstance> pluginMethodInstances = new List<IPluginMethodInstance>();
 
 		public void LoadPlugins(IPluginLoader loader)
 		{
 			logger.Info("Plugins loading started");
 			loader.LoadPlugins();
 			pluginMethods = loader.PluginMethods;
+			pluginMethodInstances = loader.PluginMethodInstances;
 			pluginMethods.OrderBy(method => method.ClassName);
 			logger.Info("Plugins loading finished");
 		}
@@ -32,14 +33,16 @@ namespace PluginService.Services
 		{
 			List<IPluginMethodInfo> methods =
 				pluginMethods.
-				Where(method => method.ReturnType == typeof(string)).
-				Where(method => method.Arguments.Length == 1 && method.Arguments[0].ParameterType == typeof(string)).ToList();
+				Where(method => method.ReturnType == typeof(string).Name).
+				Where(method => method.Arguments.Count == 1 && method.Arguments[0] == typeof(string).Name).ToList();
 			return methods;
 		}
 
-		public void ExecSimplePlugin(string method)
+		public string ExecSimplePlugin(string method)
 		{
+			string output = string.Empty;
 			(string className, string methodName, string methodArgument) = GetMethodInfo(method);
+
 			IPluginMethodInfo pluginMethod =
 				GetSimplePlugins().
 				Where(method => method.ClassName == className).
@@ -47,14 +50,26 @@ namespace PluginService.Services
 
 			if (null != pluginMethod)
 			{
-				InvokeMethod(pluginMethod, methodArgument);
+				string[] args = { methodArgument };
+				output = InvokeSimpleMethod(pluginMethod, args);
 			}
 			else
 			{
 				logger.Warn($"Method {methodName} wasn't found");
 				Console.WriteLine("Method doesn't exist");
 			}
+
+			return output;
 		}
+		private string InvokeSimpleMethod(IPluginMethodInfo pluginMethod, string[] args)
+		{
+			foreach (IPluginMethodInstance methodInstance in pluginMethodInstances)
+				if (string.Equals(methodInstance.method.Name, pluginMethod.MethodName))
+					return (string)methodInstance.method.Invoke(methodInstance.Instance, args);
+
+			return string.Empty;
+		}
+
 		private (string, string, string) GetMethodInfo(string method)
 		{
 			Regex
@@ -79,24 +94,6 @@ namespace PluginService.Services
 				methodArgument = methodArgument[2..^2];
 
 			return (className, methodName, methodArgument);
-		}
-
-		private void InvokeMethod(IPluginMethodInfo pluginMethod, string methodArgument)
-		{
-			MethodInfo method = pluginMethod.Method;
-			object[] args = { methodArgument };
-			string output = (string)method.Invoke(pluginMethod.Instance, args);
-			Console.WriteLine(output);
-		}
-
-		public List<ClassDTO> GetPluginsDTOs()
-		{
-			throw new NotImplementedException();
-		}
-
-		public List<ClassDTO> GetSimplePluginsDTOs()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

@@ -1,7 +1,5 @@
 ﻿using Infrastructure.Interfaces;
-using Plugins;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Infrastructure.DTOs
 {
@@ -15,7 +13,7 @@ namespace Infrastructure.DTOs
 
 		public static List<ClassDTO> GetPluginsDTOs(List<IPluginMethodInfo> pluginMethods)
 		{
-			List<ClassDTO> classDTOs = new List<ClassDTO>();
+			List<ClassDTO> classesDTO = new List<ClassDTO>();
 			ClassDTO classDTO = new ClassDTO();
 			string className = string.Empty;
 
@@ -24,21 +22,20 @@ namespace Infrastructure.DTOs
 				if (className != plugin.ClassName)
 				{
 					if (!string.IsNullOrEmpty(className))
-						classDTOs.Add(classDTO);
+						classesDTO.Add(classDTO);
 					classDTO = GetClassDTO(plugin);
 					className = plugin.ClassName;
 				}
 				MethodInfoDTO methodInfoDTO = new MethodInfoDTO(plugin);
 				classDTO.Methods.Add(methodInfoDTO);
 			}
-			classDTOs.Add(classDTO);
+			classesDTO.Add(classDTO);
 
-			return classDTOs;
+			return classesDTO;
 		}
 		private static ClassDTO GetClassDTO(IPluginMethodInfo plugin)
 		{
-			Plugin pluginAttribute = (Plugin)plugin.Method.DeclaringType.GetCustomAttribute(typeof(Plugin));
-			return new ClassDTO() { Name = plugin.ClassName, Vers = pluginAttribute.Version, Methods = new List<MethodInfoDTO>() };
+			return new ClassDTO() { Name = plugin.ClassName, Vers = plugin.Vers, Methods = new List<MethodInfoDTO>() };
 		}
 	}
 }

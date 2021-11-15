@@ -12,7 +12,7 @@ namespace ReportService.Services
 		private readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		private int Id = 0;
 		private readonly int timeoutTime = 30000;
-		private Dictionary<int, CancellationTokenSource> cancellationTokenSources = new Dictionary<int, CancellationTokenSource>();
+		private readonly Dictionary<int, CancellationTokenSource> cancellationTokenSources = new Dictionary<int, CancellationTokenSource>();
 		private IReportInfoRepository reportInfoRepository;
 		private readonly IReportBuilder reportBuilder;
 		private readonly IReportsFactory reportFactory;

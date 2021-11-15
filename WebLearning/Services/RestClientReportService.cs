@@ -1,9 +1,9 @@
 ﻿using Infrastructure.Interfaces;
-using RestSharp;
 using NLog;
+using RestSharp;
+using System;
 using System.IO;
 using System.Reflection;
-using System;
 
 namespace WebLearning.Services
 {

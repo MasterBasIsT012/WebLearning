@@ -1,22 +1,25 @@
-﻿using Infrastructure.Interfaces;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Interfaces;
+using Newtonsoft.Json;
 using NLog;
+using PluginService.Data;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Newtonsoft.Json;
-using Infrastructure.DTOs;
-using RestSharp.Serializers.NewtonsoftJson;
 
 namespace WebLearning.Services
 {
-	public class RestClientPluginService: IPluginService
+	public class RestClientPluginService : IPluginService
 	{
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 		private readonly RestClient restClient = new RestClient("https://localhost:5002");
 		private readonly string pluginsRoute = "api/Plugin/";
 		private readonly string pluginsDirectoryName = "Plugins";
+		private readonly string getPlugins = "GetPlugins";
+		private readonly string getSimplePlugins = "GetSimplePlugins";
+		private readonly string execSimplePlugin = "ExecSimplePlugin";
 
 		public RestClientPluginService()
 		{
@@ -35,7 +38,7 @@ namespace WebLearning.Services
 		}
 		private RestRequest GetPluginRequest(string methodName)
 		{
-			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName), DataFormat.None);
+			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName));
 			return restRequest;
 		}
 		private string GetPluginsMethodRoute(string action)
@@ -49,43 +52,62 @@ namespace WebLearning.Services
 			return path;
 		}
 
-		public void ExecSimplePlugin(string method)
-		{
-			throw new NotImplementedException();
-		}
 
 		public List<IPluginMethodInfo> GetPlugins()
 		{
-			throw new NotImplementedException();
-		}
-		
-		public List<ClassDTO> GetPluginsDTOs()
-		{
-			RestRequest restRequest = GetPluginRequest("GetPlugins");
+			RestRequest restRequest = GetPluginRequest(getPlugins);
 			string content = restClient.Get(restRequest).Content;
 			content = content.Replace("\\", "");
 			content = content.Trim('\\', '\"');
-			return JsonConvert.DeserializeObject<List<ClassDTO>>(content);
+			PluginsDTO pluginsDTO = JsonConvert.DeserializeObject<PluginsDTO>(content);
+			List<IPluginMethodInfo> pluginMethodInfos = GetPluginMethodInfos(pluginsDTO);
+			return pluginMethodInfos;
+		}
+		private List<IPluginMethodInfo> GetPluginMethodInfos(PluginsDTO pluginsDTO)
+		{
+			List<IPluginMethodInfo> pluginMethodInfos = new List<IPluginMethodInfo>();
+
+			foreach (ClassDTO classDTO in pluginsDTO.Plugins)
+			{
+				foreach (MethodInfoDTO methodInfoDTO in classDTO.Methods)
+				{
+					PluginMethodInfo pluginMethodInfo = new PluginMethodInfo()
+					{
+						ClassName = classDTO.Name,
+						Vers = classDTO.Vers,
+						MethodName = methodInfoDTO.Name,
+						ReturnType = methodInfoDTO.ReturnTypeName,
+						Arguments = methodInfoDTO.Args
+					};
+
+					pluginMethodInfos.Add(pluginMethodInfo);
+				}
+			}
+
+			return pluginMethodInfos;
 		}
 
 		public List<IPluginMethodInfo> GetSimplePlugins()
 		{
-			throw new NotImplementedException();
-		}
-		
-		public List<ClassDTO> GetSimplePluginsDTOs()
-		{
-			RestRequest restRequest = GetPluginRequest("GetSimplePlugins");
+			RestRequest restRequest = GetPluginRequest(getSimplePlugins);
 			string content = restClient.Get(restRequest).Content;
 			content = content.Replace("\\", "");
 			content = content.Trim('\\', '\"');
-			return JsonConvert.DeserializeObject<List<ClassDTO>>(content);
+			PluginsDTO pluginsDTO = JsonConvert.DeserializeObject<PluginsDTO>(content);
+			List<IPluginMethodInfo> pluginMethodInfos = GetPluginMethodInfos(pluginsDTO);
+			return pluginMethodInfos;
+		}
+
+		public string ExecSimplePlugin(string method)
+		{
+			RestRequest restRequest = GetPluginRequest(execSimplePlugin);
+			string content = restClient.Get(restRequest).Content;
+			return string.Empty;
 		}
 		
 		public void LoadPlugins(IPluginLoader loader)
 		{
 			throw new NotImplementedException();
 		}
-
 	}
 }

@@ -22,7 +22,7 @@ namespace WebLearning.Controllers
 
 		[Route("Reports/Build")]
 		[HttpPost]
-		public IActionResult Build([FromBody]string Params)
+		public IActionResult Build([FromBody] string Params)
 		{
 			int id = reportService.Build(Params);
 
@@ -31,7 +31,7 @@ namespace WebLearning.Controllers
 
 		[Route("Reports/Stop")]
 		[HttpPost]
-		public IActionResult Stop([FromQuery]int id)
+		public IActionResult Stop([FromQuery] int id)
 		{
 			reportService.Stop(id);
 
@@ -42,24 +42,29 @@ namespace WebLearning.Controllers
 		[HttpGet]
 		public IActionResult GetPlugins()
 		{
-			List<ClassDTO> plugins = pluginService.GetPluginsDTOs();
-			return Ok(JsonConvert.SerializeObject(plugins));
+			List<IPluginMethodInfo> plugins = pluginService.GetPlugins();
+			PluginsDTO pluginsDTO = new PluginsDTO();
+			pluginsDTO.Plugins = ClassDTO.GetPluginsDTOs(plugins);
+			return Ok(JsonConvert.SerializeObject(pluginsDTO));
 		}
 
 		[Route("Plugins/GetSimplePlugins")]
 		[HttpGet]
 		public IActionResult GetSimplePlugins()
 		{
-			List<ClassDTO> simplePlugins = pluginService.GetSimplePluginsDTOs();
-			return Ok(JsonConvert.SerializeObject(simplePlugins));
+			List<IPluginMethodInfo> simplePlugins = pluginService.GetSimplePlugins();
+			PluginsDTO pluginsDTO = new PluginsDTO();
+			pluginsDTO.Plugins = ClassDTO.GetPluginsDTOs(simplePlugins);
+			return Ok(JsonConvert.SerializeObject(pluginsDTO));
 		}
 
 		[Route("Plugins/ExecSimplePlugin")]
 		[HttpGet]
-		public IActionResult ExecSimplePlugin([FromBody]string method)
+		public IActionResult ExecSimplePlugin([FromBody] string method)
 		{
-			pluginService.ExecSimplePlugin(method);
-			return Ok();
+			SimplePluginDTO simplePluginDTO = new SimplePluginDTO();
+			simplePluginDTO.Result = pluginService.ExecSimplePlugin(method);
+			return Ok(JsonConvert.SerializeObject(simplePluginDTO));
 		}
 	}
 }
