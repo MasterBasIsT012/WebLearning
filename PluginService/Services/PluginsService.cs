@@ -64,10 +64,18 @@ namespace PluginService.Services
 		private string InvokeSimpleMethod(IPluginMethodInfo pluginMethod, string[] args)
 		{
 			foreach (IPluginMethodInstance methodInstance in pluginMethodInstances)
-				if (string.Equals(methodInstance.method.Name, pluginMethod.MethodName))
-					return (string)methodInstance.method.Invoke(methodInstance.Instance, args);
+				if (ArePluginsEquals(pluginMethod, methodInstance))
+					return (string)methodInstance.Method.Invoke(methodInstance.Instance, args);
 
 			return string.Empty;
+		}
+		private bool ArePluginsEquals(IPluginMethodInfo pluginMethod, IPluginMethodInstance methodInstance)
+		{
+			if (string.Equals(methodInstance.Instance.GetType().Name, pluginMethod.ClassName))
+				if (string.Equals(methodInstance.Method.Name, pluginMethod.MethodName))
+					return true;
+
+			return false;
 		}
 
 		private (string, string, string) GetMethodInfo(string method)

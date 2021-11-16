@@ -5,6 +5,6 @@ namespace Infrastructure.Interfaces
 	public interface IPluginMethodInstance
 	{
 		object Instance { get; set; }
-		MethodInfo method { get; set; }
+		MethodInfo Method { get; set; }
 	}
 }

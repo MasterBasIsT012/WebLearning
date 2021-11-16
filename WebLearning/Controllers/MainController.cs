@@ -59,7 +59,7 @@ namespace WebLearning.Controllers
 		}
 
 		[Route("Plugins/ExecSimplePlugin")]
-		[HttpGet]
+		[HttpPost]
 		public IActionResult ExecSimplePlugin([FromBody] string method)
 		{
 			SimplePluginDTO simplePluginDTO = new SimplePluginDTO();

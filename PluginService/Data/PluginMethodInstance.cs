@@ -6,12 +6,12 @@ namespace PluginService.Data
 {
 	public class PluginMethodInstance : IPluginMethodInstance
 	{
-		public MethodInfo method { get; set; }
+		public MethodInfo Method { get; set; }
 		public object Instance { get; set; }
 
 		public PluginMethodInstance(Type type, string MethodName)
 		{
-			method = type.GetMethod(MethodName);
+			Method = type.GetMethod(MethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 			Instance = Activator.CreateInstance(type);
 		}
 	}

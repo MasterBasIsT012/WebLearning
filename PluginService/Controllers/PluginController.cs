@@ -17,8 +17,8 @@ namespace PluginService.Controllers
 			this.pluginService = pluginService;
 		}
 
-		[HttpGet]
 		[Route("GetPlugins")]
+		[HttpGet]
 		public IActionResult GetPlugins()
 		{
 			List<IPluginMethodInfo> plugins = pluginService.GetPlugins();
@@ -27,8 +27,8 @@ namespace PluginService.Controllers
 			return Ok(JsonConvert.SerializeObject(pluginsDTO));
 		}
 
-		[HttpGet]
 		[Route("GetSimplePLugins")]
+		[HttpGet]
 		public IActionResult GetSimplePlugins()
 		{
 			List<IPluginMethodInfo> simplePlugins = pluginService.GetSimplePlugins();
@@ -39,8 +39,8 @@ namespace PluginService.Controllers
 			return Ok(JsonConvert.SerializeObject(pluginsDTO));
 		}
 
-		[HttpGet]
 		[Route("ExecSimplePlugin")]
+		[HttpPost]
 		public IActionResult ExecSimplePlugin([FromBody] string method)
 		{
 			SimplePluginDTO simplePluginDTO = new SimplePluginDTO();
@@ -48,8 +48,8 @@ namespace PluginService.Controllers
 			return Ok(JsonConvert.SerializeObject(simplePluginDTO));
 		}
 
-		[HttpPost]
 		[Route("LoadPlugins")]
+		[HttpPost]
 		public IActionResult LoadPlugins([FromBody] string path)
 		{
 			PluginLoader.Path = path;
