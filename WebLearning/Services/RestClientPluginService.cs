@@ -20,30 +20,20 @@ namespace WebLearning.Services
 		private readonly string getPlugins = "GetPlugins";
 		private readonly string getSimplePlugins = "GetSimplePlugins";
 		private readonly string execSimplePlugin = "ExecSimplePlugin";
+		private readonly string loadPlugins = "loadPlugins";
 
 		public RestClientPluginService()
 		{
 			try
 			{
 				logger.Info("Plugins directory path setting on ReportService started");
-				RestRequest restRequest = GetPluginRequest("LoadPlugins");
-				restRequest.AddJsonBody(GetDirectoryPath(pluginsDirectoryName));
-				restClient.Post(restRequest);
+				Post<string>(loadPlugins, GetDirectoryPath(pluginsDirectoryName));
 				logger.Info("Plugins directory path setting on ReportService finished");
 			}
 			catch (Exception ex)
 			{
 				logger.Error(ex);
 			}
-		}
-		private RestRequest GetPluginRequest(string methodName)
-		{
-			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName));
-			return restRequest;
-		}
-		private string GetPluginsMethodRoute(string action)
-		{
-			return string.Concat(pluginsRoute, action);
 		}
 		private string GetDirectoryPath(string directoryName)
 		{
@@ -55,11 +45,13 @@ namespace WebLearning.Services
 
 		public List<IPluginMethodInfo> GetPlugins()
 		{
-			RestRequest restRequest = GetPluginRequest(getPlugins);
-			string content = restClient.Get(restRequest).Content;
-			content = content.Replace("\\", "");
-			content = content.Trim('\\', '\"');
-			PluginsDTO pluginsDTO = JsonConvert.DeserializeObject<PluginsDTO>(content);
+			PluginsDTO pluginsDTO = Get<PluginsDTO>(getPlugins);
+			List<IPluginMethodInfo> pluginMethodInfos = GetPluginMethodInfos(pluginsDTO);
+			return pluginMethodInfos;
+		}
+		public List<IPluginMethodInfo> GetSimplePlugins()
+		{
+			PluginsDTO pluginsDTO = Get<PluginsDTO>(getSimplePlugins);
 			List<IPluginMethodInfo> pluginMethodInfos = GetPluginMethodInfos(pluginsDTO);
 			return pluginMethodInfos;
 		}
@@ -87,31 +79,53 @@ namespace WebLearning.Services
 			return pluginMethodInfos;
 		}
 
-		public List<IPluginMethodInfo> GetSimplePlugins()
-		{
-			RestRequest restRequest = GetPluginRequest(getSimplePlugins);
-			string content = restClient.Get(restRequest).Content;
-			content = content.Replace("\\", "");
-			content = content.Trim('\\', '\"');
-			PluginsDTO pluginsDTO = JsonConvert.DeserializeObject<PluginsDTO>(content);
-			List<IPluginMethodInfo> pluginMethodInfos = GetPluginMethodInfos(pluginsDTO);
-			return pluginMethodInfos;
-		}
-
 		public string ExecSimplePlugin(string method)
 		{
-			RestRequest restRequest = GetPluginRequest(execSimplePlugin);
-			restRequest.AddJsonBody(method);
-			string content = restClient.Post(restRequest).Content;
-			content = content.Replace("\\", "");
-			content = content.Trim('\\', '\"');
-			SimplePluginDTO simplePluginDTO = JsonConvert.DeserializeObject<SimplePluginDTO>(content);
+			SimplePluginDTO simplePluginDTO = Post<SimplePluginDTO>(execSimplePlugin, method);
 			return simplePluginDTO.Result;
 		}
-		
 		public void LoadPlugins(IPluginLoader loader)
 		{
-			throw new NotImplementedException();
+		}
+
+		private T Get<T>(string method)
+		{
+			RestRequest restRequest = GetPluginRequest(method);
+
+			string content = restClient.Get(restRequest).Content;
+			content = NormalizeToJson(content);
+
+			T DTO = JsonConvert.DeserializeObject<T>(content);
+
+			return DTO;
+		}
+		private T Post<T>(string method, string body)
+		{
+			RestRequest restRequest = GetPluginRequest(method);
+			restRequest.AddJsonBody(body);
+
+			string content = restClient.Post(restRequest).Content;
+			content = NormalizeToJson(content);
+
+			T DTO = JsonConvert.DeserializeObject<T>(content);
+
+			return DTO;
+		}
+		
+		private string NormalizeToJson(string content)
+		{
+			content = content.Replace("\\", "");
+			content = content.Trim('\\', '\"');
+			return content;
+		}
+		private RestRequest GetPluginRequest(string methodName)
+		{
+			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName));
+			return restRequest;
+		}
+		private string GetPluginsMethodRoute(string action)
+		{
+			return string.Concat(pluginsRoute, action);
 		}
 	}
 }
