@@ -1,5 +1,6 @@
 ﻿using Infrastructure.DTOs;
 using Infrastructure.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using NLog;
 using PluginService.Data;
@@ -14,7 +15,8 @@ namespace WebLearning.Services
 	public class RestClientPluginService : IPluginService
 	{
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
-		private readonly RestClient restClient = new RestClient("https://localhost:5002");
+		private readonly RestClient restClient;
+		private readonly string configureLine = "RestClientPluginService:URL";
 		private readonly string pluginsRoute = "api/Plugin/";
 		private readonly string pluginsDirectoryName = "Plugins";
 		private readonly string getPlugins = "GetPlugins";
@@ -22,11 +24,13 @@ namespace WebLearning.Services
 		private readonly string execSimplePlugin = "ExecSimplePlugin";
 		private readonly string loadPlugins = "LoadPlugins";
 
-		public RestClientPluginService()
+		public RestClientPluginService(IConfiguration configuration)
 		{
 			try
 			{
 				logger.Info("Plugins directory path setting on ReportService started");
+				string restClientURL = configuration.GetValue<string>(configureLine);
+				restClient = new RestClient(restClientURL);
 				Post<string>(loadPlugins, GetDirectoryPath(pluginsDirectoryName));
 				logger.Info("Plugins directory path setting on ReportService finished");
 			}
@@ -111,12 +115,6 @@ namespace WebLearning.Services
 			return DTO;
 		}
 		
-		private string NormalizeToJson(string content)
-		{
-			content = content.Replace("\\", "");
-			content = content.Trim('\\', '\"');
-			return content;
-		}
 		private RestRequest GetPluginRequest(string methodName)
 		{
 			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName));
@@ -125,6 +123,12 @@ namespace WebLearning.Services
 		private string GetPluginsMethodRoute(string action)
 		{
 			return string.Concat(pluginsRoute, action);
+		}
+		private string NormalizeToJson(string content)
+		{
+			content = content.Replace("\\", "");
+			content = content.Trim('\\', '\"');
+			return content;
 		}
 	}
 }

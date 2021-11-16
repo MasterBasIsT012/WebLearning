@@ -25,8 +25,8 @@ namespace WebLearning.Controllers
 		public IActionResult Build([FromBody] string Params)
 		{
 			int id = reportService.Build(Params);
-
-			return Ok(id);
+			BuildDTO buildDTO = new BuildDTO() { Id = id };
+			return Ok(JsonConvert.SerializeObject(buildDTO));
 		}
 
 		[Route("Reports/Stop")]
@@ -34,7 +34,6 @@ namespace WebLearning.Controllers
 		public IActionResult Stop([FromQuery] int id)
 		{
 			reportService.Stop(id);
-
 			return Ok(id);
 		}
 

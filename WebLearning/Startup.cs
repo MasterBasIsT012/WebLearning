@@ -8,7 +8,7 @@ namespace WebLearning
 {
 	public class Startup
 	{
-		public IConfiguration Configuration;
+		public IConfiguration Configuration { get; private set; }
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
