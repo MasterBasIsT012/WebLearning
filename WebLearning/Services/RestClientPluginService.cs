@@ -20,7 +20,7 @@ namespace WebLearning.Services
 		private readonly string getPlugins = "GetPlugins";
 		private readonly string getSimplePlugins = "GetSimplePlugins";
 		private readonly string execSimplePlugin = "ExecSimplePlugin";
-		private readonly string loadPlugins = "loadPlugins";
+		private readonly string loadPlugins = "LoadPlugins";
 
 		public RestClientPluginService()
 		{
@@ -41,7 +41,6 @@ namespace WebLearning.Services
 			string path = string.Concat(dir.Parent.FullName, "\\", directoryName);
 			return path;
 		}
-
 
 		public List<IPluginMethodInfo> GetPlugins()
 		{

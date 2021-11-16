@@ -50,7 +50,6 @@ namespace WebLearning.Services
 
 			return id;
 		}
-
 		public void Stop(int id)
 		{
 			logger.Debug("Stop method started from RestClientReprtService");
@@ -59,12 +58,10 @@ namespace WebLearning.Services
 			restClient.Post(restRequest);
 			logger.Info($"Report {id}: report stopped");
 		}
-
 		public void KillAllTasks()
 		{
 			throw new NotImplementedException();
 		}
-
 		public void Dispose()
 		{
 			throw new NotImplementedException();

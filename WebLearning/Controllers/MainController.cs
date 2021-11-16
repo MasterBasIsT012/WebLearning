@@ -43,8 +43,10 @@ namespace WebLearning.Controllers
 		public IActionResult GetPlugins()
 		{
 			List<IPluginMethodInfo> plugins = pluginService.GetPlugins();
-			PluginsDTO pluginsDTO = new PluginsDTO();
-			pluginsDTO.Plugins = ClassDTO.GetPluginsDTOs(plugins);
+			PluginsDTO pluginsDTO = new PluginsDTO()
+			{
+				Plugins = ClassDTO.GetPluginsDTOs(plugins)
+			};
 			return Ok(JsonConvert.SerializeObject(pluginsDTO));
 		}
 
@@ -53,8 +55,10 @@ namespace WebLearning.Controllers
 		public IActionResult GetSimplePlugins()
 		{
 			List<IPluginMethodInfo> simplePlugins = pluginService.GetSimplePlugins();
-			PluginsDTO pluginsDTO = new PluginsDTO();
-			pluginsDTO.Plugins = ClassDTO.GetPluginsDTOs(simplePlugins);
+			PluginsDTO pluginsDTO = new PluginsDTO()
+			{
+				Plugins = ClassDTO.GetPluginsDTOs(simplePlugins)
+			};
 			return Ok(JsonConvert.SerializeObject(pluginsDTO));
 		}
 
