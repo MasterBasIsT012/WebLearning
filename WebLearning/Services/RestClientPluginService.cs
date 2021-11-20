@@ -114,7 +114,7 @@ namespace WebLearning.Services
 
 			return DTO;
 		}
-		
+
 		private RestRequest GetPluginRequest(string methodName)
 		{
 			RestRequest restRequest = new RestRequest(GetPluginsMethodRoute(methodName));
