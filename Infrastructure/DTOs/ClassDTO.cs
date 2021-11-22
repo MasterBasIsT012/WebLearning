@@ -21,8 +21,6 @@ namespace Infrastructure.DTOs
 			{
 				if (className != plugin.ClassName)
 				{
-					if (!string.IsNullOrEmpty(className))
-						classesDTO.Add(classDTO);
 					classDTO = GetClassDTO(plugin);
 					className = plugin.ClassName;
 				}
@@ -35,7 +33,12 @@ namespace Infrastructure.DTOs
 		}
 		private static ClassDTO GetClassDTO(IPluginMethodInfo plugin)
 		{
-			return new ClassDTO() { Name = plugin.ClassName, Vers = plugin.Vers, Methods = new List<MethodInfoDTO>() };
+			return new ClassDTO() 
+			{ 
+				Name = plugin.ClassName, 
+				Vers = plugin.Vers, 
+				Methods = new List<MethodInfoDTO>() 
+			};
 		}
 	}
 }
